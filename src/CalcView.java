@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
 import javax.swing.*;
 
-public class CalcView implements ActionListener {
+public class CalcView {
     private final static int WIDTH = 320;
     private final static int HEIGHT = 480;
     private final static boolean frameIsResizeable =false;
@@ -20,16 +20,28 @@ public class CalcView implements ActionListener {
     GridBagConstraints c;
     JFrame frame;
 
-    public void setResultField(double vale) {
+    CalcView(){
+        createAndShowGUI();
+    }
+
+    public void setResFieldText(double vale) {
         resultField.setText(Double.toString(vale));
     }
 
-    public double getResultField() {
+    public double getResultFieldText() {
         return Double.parseDouble(resultField.getText());
     }
 
-    CalcView(){
-        createAndShowGUI();
+    public JTextField getResultField() {
+        return resultField;
+    }
+
+    public JButton[] getNumberButtons() {
+        return numberButtons;
+    }
+
+    public JButton[] getOppButtons() {
+        return oppButtons;
     }
 
     private void addNumButtons(Container pane, GridBagConstraints c){
@@ -49,7 +61,6 @@ public class CalcView implements ActionListener {
 
         for (int i=0; i<numberButtons.length; i++){
             numberButtons[i] = new JButton(" " +i);
-            numberButtons[i].addActionListener(this);
             c.gridx=numConstrains[i][0];
             c.gridy=numConstrains[i][1];
             c.gridwidth=numConstrains[i][2];
@@ -87,8 +98,6 @@ public class CalcView implements ActionListener {
         };
 
         for (int i=0; i<oppButtons.length; i++){
-            oppButtons[i].addActionListener(this);
-
             gbc.gridx= oppConstrains[i][0];
             gbc.gridy= oppConstrains[i][1];
             gbc.gridwidth= oppConstrains[i][2];
@@ -145,67 +154,6 @@ public class CalcView implements ActionListener {
         //Display the window.
         frame.setVisible(true);
         frame.pack();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        for (int i=0;i<numberButtons.length;i++){
-            if (e.getSource().equals(numberButtons[i])){
-                resultField.setText(resultField.getText()+ i);
-            }
-        }
-
-        if (e.getSource().equals(oppButtons[0]) && !resultField.getText().contains(".")){
-            resultField.setText(resultField.getText()+".");
-        }
-        if (e.getSource().equals(oppButtons[6]) && !(resultField.getText().equals(""))){
-            resultField.setText(""+-1* Double.parseDouble(resultField.getText()));
-        }
-        if (e.getSource().equals(oppButtons[7])){
-            resultField.setText("");
-        }
-        if (e.getSource().equals(oppButtons[2])&& !(op==1)&& !(resultField.getText().equals(""))){
-            num1=Double.parseDouble(resultField.getText());
-            resultField.setText("");
-            op=1;
-        }
-        if (e.getSource().equals(oppButtons[3])&& !(op==2)&& !(resultField.getText().equals(""))){
-            num1=Double.parseDouble(resultField.getText());
-            resultField.setText("");
-            op=2;
-        }
-        if (e.getSource().equals(oppButtons[4])&& !(op==3)&& !(resultField.getText().equals(""))){
-            num1=Double.parseDouble(resultField.getText());
-            resultField.setText("");
-            op=3;
-        }
-        if (e.getSource().equals(oppButtons[5])&& !(op==4)&& !(resultField.getText().equals("")) ){
-            num1=Double.parseDouble(resultField.getText());
-            resultField.setText("");
-            op=4;
-        }
-        if (e.getSource().equals(oppButtons[1]) && !(op==0)){
-            num2=Double.parseDouble(resultField.getText());
-
-            switch (op){
-                case 1:
-                    res=num1+num2;
-                    break;
-                case 2:
-                    res=num1-num2;
-                    break;
-                case 3:
-                    res=num1*num2;
-                    break;
-                case 4:
-                    res=num1/num2;
-                    break;
-            }
-            op=0;
-            resultField.setText(""+res);
-        }
-
-
     }
 
     public void addActionListener(ActionListener listenForButton){
