@@ -20,10 +20,13 @@ public class CalcView implements ActionListener {
     GridBagConstraints c;
     JFrame frame;
 
-    double num1, num2;
-    int op;
-    double res;
+    public void setResultField(double vale) {
+        resultField.setText(Double.toString(vale));
+    }
 
+    public double getResultField() {
+        return Double.parseDouble(resultField.getText());
+    }
 
     CalcView(){
         createAndShowGUI();
@@ -204,6 +207,20 @@ public class CalcView implements ActionListener {
 
 
     }
+
+    public void addActionListener(ActionListener listenForButton){
+        for (int i=0;i<numberButtons.length;i++){
+            numberButtons[i].addActionListener(listenForButton);
+
+        }
+    }
+
+    public void displayErrorMessage(String errorMessage){
+        JOptionPane.showMessageDialog(frame,errorMessage);
+
+    }
+
+
 
 
 
