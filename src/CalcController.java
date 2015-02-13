@@ -1,9 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Pawel on 2015-02-13.
- */
+
 public class CalcController {
     CalcModel model;
     CalcView view;
@@ -11,7 +9,7 @@ public class CalcController {
     CalcController(CalcView view,CalcModel model){
         this.view=view;
         this.model=model;
-        this.view.addActionListener(new CalcListener);
+        this.view.addActionListener(new CalcListener());
     }
 
     class CalcListener implements ActionListener{
@@ -19,58 +17,58 @@ public class CalcController {
         public void actionPerformed(ActionEvent e) {
             for (int i=0;i<view.getNumberButtons().length;i++){
                 if (e.getSource().equals(view.getNumberButtons()[i])){
-                    view.setResFieldText(view.getResultFieldText()+ i);
+                    view.setResFieldText(view.getResultFieldText()+i);
                 }
             }
 
             if (e.getSource().equals(view.getOppButtons()[0]) && ! (view.getResultField().getText().contains(".")) ){
-                resultField.setText(resultField.getText()+".");
+                view.setResFieldText(view.getResultFieldText() + ".");
             }
-            if (e.getSource().equals(oppButtons[6]) && !(resultField.getText().equals(""))){
-                resultField.setText(""+-1* Double.parseDouble(resultField.getText()));
+            if (e.getSource().equals(view.getOppButtons()[6]) && !(view.getResultFieldText().equals(""))){
+                view.setResFieldText("" + -1 * Double.parseDouble(view.getResultFieldText()));
             }
-            if (e.getSource().equals(oppButtons[7])){
-                resultField.setText("");
+            if (e.getSource().equals(view.getOppButtons()[7])){
+                view.setResFieldText("");
             }
-            if (e.getSource().equals(oppButtons[2])&& !(op==1)&& !(resultField.getText().equals(""))){
-                num1=Double.parseDouble(resultField.getText());
-                resultField.setText("");
-                op=1;
+            if (e.getSource().equals(view.getOppButtons()[2])&& !(model.getOp()==1)&& !(view.getResultFieldText().equals(""))){
+                model.setNum1(Double.parseDouble(view.getResultFieldText()));
+                view.setResFieldText("");
+                model.setOp(1);
             }
-            if (e.getSource().equals(oppButtons[3])&& !(op==2)&& !(resultField.getText().equals(""))){
-                num1=Double.parseDouble(resultField.getText());
-                resultField.setText("");
-                op=2;
+            if (e.getSource().equals(view.getOppButtons()[3])&& !(model.getOp()==2)&& !(view.getResultFieldText().equals(""))){
+                model.setNum1(Double.parseDouble(view.getResultFieldText()));
+                view.setResFieldText("");
+                model.setOp(2);
             }
-            if (e.getSource().equals(oppButtons[4])&& !(op==3)&& !(resultField.getText().equals(""))){
-                num1=Double.parseDouble(resultField.getText());
-                resultField.setText("");
-                op=3;
+            if (e.getSource().equals(view.getOppButtons()[4])&& !(model.getOp()==2)&& !(view.getResultFieldText().equals(""))){
+                model.setNum1(Double.parseDouble(view.getResultFieldText()));
+                view.setResFieldText("");
+                model.setOp(3);
             }
-            if (e.getSource().equals(oppButtons[5])&& !(op==4)&& !(resultField.getText().equals("")) ){
-                num1=Double.parseDouble(resultField.getText());
-                resultField.setText("");
-                op=4;
+            if (e.getSource().equals(view.getOppButtons()[5])&& !(model.getOp()==2)&& !(view.getResultFieldText().equals(""))){
+                model.setNum1(Double.parseDouble(view.getResultFieldText()));
+                view.setResFieldText("");
+                model.setOp(4);
             }
-            if (e.getSource().equals(oppButtons[1]) && !(op==0)){
-                num2=Double.parseDouble(resultField.getText());
+            if (e.getSource().equals(view.getOppButtons()[1]) && !(model.getOp()==0)){
+                model.setNum2(Double.parseDouble(view.getResultFieldText()));
 
-                switch (op){
+                switch (model.getOp()){
                     case 1:
-                        res=num1+num2;
+                        model.addTwoNumbers();
                         break;
                     case 2:
-                        res=num1-num2;
+                        model.subtractTwoNumbers();
                         break;
                     case 3:
-                        res=num1*num2;
+                        model.multipleTwoNumbers();
                         break;
                     case 4:
-                        res=num1/num2;
+                        model.divideTwoNumbers();
                         break;
                 }
-                op=0;
-                resultField.setText(""+res);
+                model.setOp(0);
+                view.setResFieldText(""+model.getRes());
             }
         }
     }

@@ -1,10 +1,7 @@
 
-import com.sun.glass.ui.InvokeLaterDispatcher;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
 import javax.swing.*;
 
 public class CalcView {
@@ -24,12 +21,12 @@ public class CalcView {
         createAndShowGUI();
     }
 
-    public void setResFieldText(double vale) {
-        resultField.setText(Double.toString(vale));
+    public void setResFieldText(String text) {
+        resultField.setText(text);
     }
 
-    public double getResultFieldText() {
-        return Double.parseDouble(resultField.getText());
+    public String getResultFieldText() {
+        return resultField.getText();
     }
 
     public JTextField getResultField() {
@@ -157,15 +154,13 @@ public class CalcView {
     }
 
     public void addActionListener(ActionListener listenForButton){
-        for (int i=0;i<numberButtons.length;i++){
-            numberButtons[i].addActionListener(listenForButton);
-
+        for (JButton button: numberButtons){
+            button.addActionListener(listenForButton);
         }
-    }
 
-    public void displayErrorMessage(String errorMessage){
-        JOptionPane.showMessageDialog(frame,errorMessage);
-
+        for (JButton button: oppButtons){
+            button.addActionListener(listenForButton);
+        }
     }
 
 
